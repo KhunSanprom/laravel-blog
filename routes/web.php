@@ -8,3 +8,5 @@ Route::get('/', function () {
 });
 
 Route::get('blog',[adminController::class,'index'])->name('blog-page');
+
+Route::get('create',[adminController::class,'create_blog'])->name('create-blog');

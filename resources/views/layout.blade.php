@@ -25,7 +25,7 @@
                         <a class="nav-link" href="{{ route('blog-page') }}">Blogs</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Create Blog</a>
+                        <a class="nav-link" href="{{ route('create-blog') }}">Create Blog</a>
                     </li>
 
                     {{-- <li class="nav-item dropdown">

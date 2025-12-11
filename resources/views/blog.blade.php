@@ -1,7 +1,5 @@
 @extends('layout')
-@section('title')
-    BLOG
-@endsection
+@section('title','BLOG')
 @section('content')
     <h1 class="text-center py-2">
         BLOGs</h1>
