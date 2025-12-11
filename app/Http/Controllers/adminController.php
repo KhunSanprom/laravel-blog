@@ -35,4 +35,15 @@ class adminController extends Controller
     function create_blog(){
         return view('form');
     }
+
+    function insert(Request $request){
+        $request->validate([
+            'title'=>'required|max:50',
+            'content'=>'required'
+        ],[
+            'title.required'=>'Please enter the blog title.',
+            'title.max'=>'The title not more than 50 character',
+            'content'=>'Pleasr enter the blog content'
+        ]);
+    }
 }
