@@ -3,32 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class adminController extends Controller
 {
     function index(){
-        $blogs=[
-            [
-                'title'=>"Blog 1",
-                'content' => "Content 1",
-                'status' => true
-            ],
-            [
-                'title'=>"Blog 2",
-                'content' => "Content 2",
-                'status' => true
-            ],
-            [
-                'title'=>"Blog 3",
-                'content' => "Content 3",
-                'status' => false
-            ],
-            [
-                'title'=>"Blog 4",
-                'content' => "Content 4",
-                'status' => true
-            ]
-        ];
+        $blogs = DB::table('blogs')->get();
         return view('blog',compact('blogs'));
     }
 
@@ -45,5 +25,31 @@ class adminController extends Controller
             'title.max'=>'The title not more than 50 character',
             'content'=>'Pleasr enter the blog content'
         ]);
+        $data=[
+            'title'=>$request->title,
+            'content'=>$request->content
+        ];
+        DB::table('blogs')->insert($data);
+        return redirect('/blog');
+    }
+
+    function delete($id){
+        DB::table('blogs')->where('id',$id)->delete();
+        return redirect('/blog');
+    }
+
+    function statusChange($id){
+        $blog= DB::table('blogs')->where('id',$id)->first();
+        $data=[
+            'status'=>!$blog->status
+        ];
+
+        $blog=DB::table('blogs')->where('id',$id)->update($data);
+        return redirect('/blog');
+    }
+
+    function edit($id){
+        $blog= DB::table('blogs')->where('id',$id)->first();
+        return view('edit',compact('blog'));
     }
 }

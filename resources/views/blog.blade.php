@@ -9,33 +9,34 @@
                 <th scope="col">Blog</th>
                 <th scope="col">Content</th>
                 <th scope="col">Status</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($blogs as $item)
                 <tr>
-                    <td>{{ $item['title'] }}</td>
-                    <td>{{ $item['content'] }}</td>
+                    <td>{{ $item->title }}</td>
+                    <td>{{ Str::limit($item->content,50) }}</td>
                     <td>
-                        @if ($item['status'] == true)
-                            <p class = "text text-success">Publish</p>
+                        @if ($item->status == true)
+                            <a href="{{route('statusChange',$item->id)}}" class = "btn btn-success">Publish</a>
                         @else
-                            <p class = "text text-warning">Draf</p>
+                            <a href="{{route('statusChange',$item->id)}}" class = "btn btn-secondary">- Draf -</a>
                         @endif
                     </td>
+                    <td>
+                        <a href="{{route('edit',$item->id)}}" class="btn btn-warning">
+                            Update
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{route('delete',$item->id)}}" class="btn btn-danger" 
+                            onclick="return confirm('You want to delete the blog{{$item->title}} ?')">
+                            Delete
+                        </a></td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-    {{-- @foreach ($blogs as $item)
-        <h4>{{ $item['title'] }}</h4>
-        <p>{{ $item['content'] }}</p>
-
-        @if ($item['status'] == true)
-            <p class = "text text-success">Publish</p>
-        @else
-            <p class = "text text-danger">Draf</p>
-        @endif
-        <hr>
-    @endforeach --}}
 @endsection
