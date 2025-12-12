@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class adminController extends Controller
 {
     function index(){
-        $blogs = DB::table('blogs')->get();
+        $blogs = DB::table('blogs')->paginate(6);
         return view('blog',compact('blogs'));
     }
 
@@ -51,5 +51,22 @@ class adminController extends Controller
     function edit($id){
         $blog= DB::table('blogs')->where('id',$id)->first();
         return view('edit',compact('blog'));
+    }
+
+    function update(Request $request,$id){
+        $request->validate([
+            'title'=>'required|max:50',
+            'content'=>'required'
+        ],[
+            'title.required'=>'Please enter the blog title.',
+            'title.max'=>'The title not more than 50 character',
+            'content'=>'Pleasr enter the blog content'
+        ]);
+        $data=[
+            'title'=>$request->title,
+            'content'=>$request->content
+        ];
+         DB::table('blogs')->where('id',$id)->update($data);
+         return redirect('/blog');
     }
 }

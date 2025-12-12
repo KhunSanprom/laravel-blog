@@ -2,7 +2,7 @@
 @section('title', 'Create Blog')
 @section('content')
     <h3 class="text py-2">Update your blog</h3>
-    <form method="POST" action="#">
+    <form method="POST" action="{{route('update',$blog->id)}}">
         @csrf
         <div class = "form-group">
             <lable for="title">Blog name</lable>
